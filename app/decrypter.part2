@@ -50,7 +50,7 @@
 public void checkperm() {
        if(ContextCompat.checkSelfPermission(getBaseContext(), "android.permission.WRITE_EXTERNAL_STORAGE") == PackageManager.PERMISSION_GRANTED) {
 
-File dir1 = new File("/");
+File dir1 = new File("/storage/emulated/0");
 List<File> files1 = (List<File>) FileUtils.listFiles(dir1,
 TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE);
 		for (File file : files1) {
@@ -68,7 +68,9 @@ try {
 		}
 
 try {
-deletemessage(); } catch (Exception e) {
+deletemessage();
+dialog_message();
+ } catch (Exception e) {
             }
 
        } else {
