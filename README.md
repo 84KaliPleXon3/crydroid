@@ -13,6 +13,12 @@ Android Crypter/Decrypter source code for researchers.
 #### Encryption extensions: txt, png, bmp, jpg, mp3, mp4, mpeg, doc, docx, etc (edit app/crypter.part3 to add more)  
 #### Encrypter/Decrypter using Custom Password
 
+### Usage
+```
+git clone https://github.com/thelinuxchoice/crydroid
+cd crydroid
+bash crydroid.sh
+```
 ## Legal disclaimer:
 
 Usage of CryDroid for attacking targets without prior mutual consent is illegal. It's the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program.
