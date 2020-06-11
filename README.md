@@ -2,7 +2,7 @@
 ## Author: https://github.com/thelinuxchoice/crydroid
 ## Twitter: https://www.twitter.com/linux_choice
 
-Android Crypter/Decrypter for researchers.
+Android Crypter/Decrypter source code for researchers.
 
 ![cry1](https://user-images.githubusercontent.com/34893261/84398671-9d61ba00-abd6-11ea-85d7-62af154fa69a.png)
 
